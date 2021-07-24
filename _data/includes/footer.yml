@@ -8,6 +8,8 @@ footer_content:
       sub_link: "/#Course Description"
     - subtab: "Instructors"
       sub_link: "/#Instructors"
+    - subtab: "Teaching-Assistants"
+      sub_link: "/#Teaching-Assistants"
     - subtab: "FAQs"
       sub_link: "/#FAQs"   
 
