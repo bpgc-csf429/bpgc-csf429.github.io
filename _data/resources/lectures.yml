@@ -1,0 +1,40 @@
+lecture:
+  - lec: 'Lecture 1: Topic Name1' #edit Topic Name
+    resources:
+      - resource:
+          type: 'Slides'
+          link: '../assets/slides/orca.pptx'
+      - resource:
+          type: 'Notes'
+          link: '../assets/notes/orca.pdf'
+      - resource:
+          type: 'Extra Reading'
+          link: '#'
+  - lec: 'Lecture 2: Topic Name2'
+    resources:
+      - resource:
+          type: 'Notes'
+          link: '../assets/notes/orca.pdf'
+  - lec: 'Lecture 3: Topic Name3'
+    resources:
+      - resource:
+          type: 'Extra Reading'
+          link: '#'
+      - resource:
+          type: 'Video Lecture'
+          link: '#'
+  - lec: 'Lecture 4: Topic Name4'
+    resources:
+      - resource:
+          type: 'Video Lecture'
+          link: '#'
+  
+# - lec: 'Lecture 5: Topic Name5'
+#   resources:
+#     - resource:
+#         type: 'Slides'
+#         link: ''
+
+
+# (Uncomment the above code to add Lecture 4 and its links.
+#   You can add more lectures & resource in same format.)      

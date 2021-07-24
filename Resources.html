@@ -1,0 +1,67 @@
+---
+layout: home
+permalink: /resources/
+---
+<!--Resources for students-->
+<main class="index-page" >
+    <section class="page-head ">
+        <div class="wrap">
+            <div class="head-decor">
+                <h1 class="head-title">Resources</h1>
+            </div>
+        </div>
+    </section>
+    <hr><br>
+    <section class="standard-text ">
+        <div class="wrap">
+            <p>The primary resources for this course are shared below.</p>
+        </div>
+        <div class="wrap">
+            <h2 class="standard-title" id="Assignments">Assignments</h2>
+                <p> See <a href="{{site.url}}/{{site.baseurl}}/syllabus">Syllabus</a> for more information.</p>
+            <ul class="lists two-col animate-3" resource="homeworks">
+                {% for item in site.data.resources.assign.assignments %}
+                {% if item.link =='' %}
+                <li>{{item.name}}</li>
+                {% else %}
+                <li><a href="{{item.link}}" target="_blank">{{item.name}}</a></li>
+                {%endif%}
+                {% endfor %}
+            </ul>
+        </div>
+        <br><hr><br>
+        <div class="wrap">
+            <h2 class="standard-title" id="Lecture Slides">Lecture Slides</h2>
+            <p> See <a href="{{site.url}}/{{site.baseurl}}/syllabus">Syllabus</a> for more information.</p>
+                <ul>
+                    {% for item in site.data.resources.lectures.lecture %}
+                    <li>{{item.lec}}<br>
+                        {% for element in item.resources %}
+                            <a href="{{element.resource.link}}" target="_blank">[{{element.resource.type}}]</a>
+                        {% endfor %}
+                    </li>
+                    {% endfor %}
+                </ul>
+        </div>
+        <br><hr><br>
+        <div class="wrap">
+            <h2 class="standard-title" id="Online Resources">Online Resources</h2>
+            <ul style="list-style-type:square;">
+                {% for item in site.data.resources.online.resource %}
+                <li><a href="{{item.link}}" target="_blank">{{item.topic}}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        <br><hr><br>
+        <div class="wrap">
+            <h2 class="standard-title" id="Misc Links">Misc Links</h2>
+            <ul style="list-style-type:square;">
+                {% for item in site.data.resources.Misc.misc %}
+                <li><a href="{{item.link}}" target="_blank">{{item.topic}}</a></li>
+                {% endfor %}
+            </ul>    
+        </div>
+        <hr><br>
+    </section> 
+
+</main>

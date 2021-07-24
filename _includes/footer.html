@@ -1,0 +1,23 @@
+<!--Footer-->
+<!DOCTYPE html>
+<html>
+<hr>
+<footer class="footer-links wrap-container" id="footer" style="padding-left:10vw ;">
+    <div class="wrap">
+        {% for tab in site.data.includes.footer.footer_content %}
+        <div class="col col-md-3">
+        <h3><a href="{{site.url}}/{{site.baseurl}}/{{tab.link}}" style="margin-right: 0;">{{tab.tabname}}</a></h3>
+            <ul class="lists">
+              {% for child in tab.subtopic %}
+                <li><a href="{{site.url}}/{{site.baseurl}}/{{child.sub_link}}" >{{child.subtab}}</a></li>
+              {% endfor %}
+            </ul>
+        </div>
+        {% endfor %}
+  </div>
+</footer>
+<hr>
+<div style="text-align: center; background:linear-gradient(to right, rgb(30, 30, 30), rgb(60, 60, 60), rgb(30, 30, 30)); color: white;" >
+    Made with <i class="fa fa-heart pulse"></i> by <a href="https://github.com/Atharva-Chandak" target="_blank">Atharva Chandak</a>
+</div>
+</html>

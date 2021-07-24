@@ -1,0 +1,25 @@
+---
+layout: home
+permalink: /syllabus/
+---
+<!--Course syllabus -->
+ <main class="index-page" style="list-style-type:square; ">
+    <section class="page-head ">
+        <div class="wrap">
+            <div class="head-decor">
+                <h1 class="head-title">Syllabus</h1>
+            </div>
+        </div>
+    </section>
+    {% for item in site.data.syllabus.syllabus.syllabus %}
+       <hr><br>  
+        <section class="standard-text " >    
+        <div class="wrap" >
+            <h2 class="standard-title" id="{{item.heading}}" >{{item.heading}}</a></h2>
+            <div class="copy">{{item.content}}</div>
+        </div>  
+        </section>
+        <br>
+    {% endfor %}
+    <hr><br>    
+</main>

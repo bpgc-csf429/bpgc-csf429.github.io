@@ -1,0 +1,57 @@
+---
+layout: home
+---
+<body>
+    <div class='content' style="text-align: justify;">
+        The <em>Awesome</em> course
+        <h1 id="main-title" style="font-weight: 800; font-size: 3em;">{{site.title}}</h1>
+        <br>
+        <h1 id="Course Description">Course Description</h1>
+        {% for para in site.data.home.course.content %}
+
+            {{para.p}}    
+
+        {% endfor %}
+        <br><hr><br>
+        <h1 class="standard-title" id="Instructors">Instructors</h1>
+        <br>
+        <ul class=lists>
+            <li>
+                <div class="person col-md-12 col-sm-24 col-xs-24" id="profs">
+                {% for item in site.data.home.instructors.instructor %}
+                <div>
+                    <div class="person-thumbnail" style="margin-left:1vw">
+                        <div class="person-avatar">
+                            <span class="person-image" style="background: url({{item.img}}); "></span>
+                        </div>
+                    </div>
+                    <div class="person-text">
+                        <h2 class="person-name">Instructor<a href="{{item.github}}" target="_blank"> {{item.name}} </a></h2>
+                    <p><span>{{item.email}}</span></p>
+                    <p>Consultation Hours: {{item.consultation}} </p>
+                    </div>
+                </div>
+                <hr style="margin: 3vh 15vw 5vh 0vw; border-style:dashed ;"> 
+                {% endfor %}
+                </div>
+            </li>
+        </ul>
+        <h1 class="standard-title" id="FAQs">FAQs</h1>
+            {% for item in site.data.home.FAQs.FAQ %}
+            <ul class= lists style="font-size:1.2em">
+                <li style="font-weight: 500;"> {{item.question}}</li>
+                <li style="color: rgb(120,120,120); margin-left: 1vw;"> - {{item.answer}}</li>
+            </ul> 
+            {% endfor %}
+
+        
+        <!--
+        <hr><br>
+        <h1 class="standard-title" >   HEADING   </h1>
+        <br>
+        <p>
+            ADD EXTRA CONENT(IF ANY) HERE AND REMOVE THE COMMENT
+        </p>
+        -->
+    </div>
+</body>
