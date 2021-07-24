@@ -1,12 +1,6 @@
 instructor:
-- name: Alpha Beta
-  github: https://github.com/atharva-chandak #instrucor's github link
-  email: intructor@gmail.com 
+- name: Dr. Swati Agarwal
+  github: https://github.com/csf429-bpgc #instrucor's github link
+  email: swatia@goa.bits-pilani.ac.in
   img: assets/instructor.svg
-  consultation: 'Sat 6:30 - 7:30pm, 6116A'
-
-- name: Gamma Delta
-  github: https://github.com/atharva-chandak 
-  email: intructor@gmail.com 
-  img: assets/instructor.svg
-  consultation: 'Mon 6:30 - 7:30pm, 6116B'
+  consultation: 'TBA'
