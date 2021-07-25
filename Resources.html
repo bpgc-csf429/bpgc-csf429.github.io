@@ -44,7 +44,7 @@ permalink: /resources/
         </div>
         <br><hr><br>
         <div class="wrap">
-            <h2 class="standard-title" id="Online Resources">Online Resources</h2>
+            <h2 class="standard-title" id="Online Resources">Other Resources</h2>
             <ul style="list-style-type:square;">
                 {% for item in site.data.resources.online.resource %}
                 <li><a href="{{item.link}}" target="_blank">{{item.topic}}</a></li>
@@ -52,15 +52,6 @@ permalink: /resources/
             </ul>
         </div>
         <br><hr><br>
-        <div class="wrap">
-            <h2 class="standard-title" id="Misc Links">Misc Links</h2>
-            <ul style="list-style-type:square;">
-                {% for item in site.data.resources.Misc.misc %}
-                <li><a href="{{item.link}}" target="_blank">{{item.topic}}</a></li>
-                {% endfor %}
-            </ul>    
-        </div>
-        <hr><br>
     </section> 
 
 </main>
