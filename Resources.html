@@ -34,7 +34,7 @@ permalink: /resources/
             <h2 class="standard-title" id="Lecture Slides">Tutorials</h2>
                 <ul>
                     {% for item in site.data.resources.tutorials.tutorial %}
-                    <li>{{item.lec}}<br>
+                    <li>{{item.tut}}<br>
                         {% for element in item.resources %}
                             <a href="{{element.resource.link}}" target="_blank">[{{element.resource.type}}]</a>
                         {% endfor %}
