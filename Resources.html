@@ -37,7 +37,7 @@ permalink: /resources/
                     <li><h3 class="standard-title" id="Assignments">{{item.tut}}</h3>
                         <span style="text-align:left;">
                         By: {{item.author}} <span style="float:right;"> Date: {{item.date}} </span>
-                        </span><br>
+                        </span><hr><br>
                         {% for element in item.resources %}
                             <a href="{{element.resource.link}}" target="_blank">[{{element.resource.type}}]</a>
                         {% endfor %}
