@@ -10,21 +10,12 @@ tutorial:
       - resource:
           type: 'Extra Reading'
           link: '#'
+    date: "25-07-21"
+    author: "Anonymous"
   - tut: 'Lecture 2: Topic Name2'
     resources:
       - resource:
           type: 'Notes'
           link: '../assets/notes/orca.pdf'
-  - tut: 'Lecture 3: Topic Name3'
-    resources:
-      - resource:
-          type: 'Extra Reading'
-          link: '#'
-      - resource:
-          type: 'Video Lecture'
-          link: '#'
-  - tut: 'Lecture 4: Topic Name4'
-    resources:
-      - resource:
-          type: 'Video Lecture'
-          link: '#'
+    date: "24-07-21"
+    author: "Anonymous"
