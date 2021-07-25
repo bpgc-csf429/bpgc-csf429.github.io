@@ -3,19 +3,19 @@ tutorial:
     resources:
       - resource:
           type: 'Slides'
-          link: '../assets/slides/orca.pptx'
+          link: '../assets/slides/Test1.pdf'
       - resource:
           type: 'Notes'
-          link: '../assets/notes/orca.pdf'
+          link: '../assets/notes/Test2.pdf'
       - resource:
           type: 'Extra Reading'
-          link: '#'
+          link: 'https://www.google.co.in/'
     date: "25-07-21"
     author: "Anonymous"
   - tut: 'Lecture 2: Topic Name2'
     resources:
       - resource:
           type: 'Notes'
-          link: '../assets/notes/orca.pdf'
+          link: '../assets/notes/Test2.pdf'
     date: "24-07-21"
     author: "Anonymous"
