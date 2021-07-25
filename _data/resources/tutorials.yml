@@ -5,6 +5,9 @@ tutorial:
           type: 'Slides'
           link: '../assets/tutorials/Test1.pdf'
       - resource:
+          type: 'Notebook'
+          link: '../assets/notebooks/test1' #Remove the .html
+      - resource:
           type: 'Notes'
           link: '../assets/tutorials/Test2.pdf'
       - resource:
@@ -17,5 +20,8 @@ tutorial:
       - resource:
           type: 'Notes'
           link: '../assets/tutorials/Test2.pdf'
+      - resource:
+          type: 'Notebook'
+          link: '../assets/notebooks/test2'
     date: "24-07-21"
     author: "Anonymous"
