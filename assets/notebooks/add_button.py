@@ -12,9 +12,9 @@ if __name__ == "__main__":
         for i, line in enumerate(lines):
             if line.startswith(
                 '<div class="text_cell_render border-box-sizing rendered_html">'
-            ):  # find a pattern so that we can add next to that line
+            ):
                 lines[i] = lines[i] + button
         f.truncate()
-        f.seek(0)  # rewrite into the file
+        f.seek(0)
         for line in lines:
             f.write(line)
