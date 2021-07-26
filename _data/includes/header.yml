@@ -36,9 +36,7 @@ navbar:
     subtopic:
     - subtab: Assignments
       sub_link: resources#Assignments  
-    - subtab: Lecture Slides
+    - subtab: Tutorials
       sub_link: resources#Lecture Slides  
     - subtab: Online Resources
       sub_link: resources#Online Resources  
-    - subtab: Misc Links
-      sub_link: resources#Misc Links 
