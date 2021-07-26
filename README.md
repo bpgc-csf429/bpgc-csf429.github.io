@@ -2,7 +2,7 @@
 Course website for Natural Language Processing @ BITS Pilani, Goa
 For queries feel free to contact me: singhksomesh@gmail.com
 
-#Deployment
+# Deployment
 The website is deployed at https://bpgc-csf429.github.io/
 
 ## Template:
