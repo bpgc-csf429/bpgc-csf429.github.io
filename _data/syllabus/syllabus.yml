@@ -2,14 +2,9 @@ syllabus:
   - heading: Technology
     content: "Check the (Handout)[../assets/CSF429_Handout.pdf]."
 
-  - heading: Books
+  - heading: Book
     content: "T1. Dan Jurafsky, James H. Martin. ”Speech and Language Processing. An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition”. Prentice-Hall. 3rd edition (https://web.stanford.edu/~jurafsky/slp3/ed3book_dec302020.pdf)[Official Link for 3rd edition draft.]"
 
-  - heading: Reference Books
-    content: " <ol><li>Manning, Christopher, and Hinrich Schutze. ”Foundations of statistical natural language processing”. MIT press, 1999.</li>
-            <li>Steven Bird, Ewan Klein, and Edward Loper. ”Natural Language Processing with Python – Analyzing Text with the Natural Language Toolkit”. O’Reilly.<\li>
-              <li>Sowmya Vajjala, Bodhisattwa Majumder, Anuj Gupta, Harshit Surana. 2020. ”Practical Natural Language Processing”. O’Reilly.</li>
-              <li>Hobson Lane, Cole Howard, Hannes Hapke. 2019. ”Natural Language Processing in Action”. Manning Publications (https://livebook.manning.com/book/natural-language-processing-in-action/)[Live Book]</li></ol> "
   - heading: Grading Policy 
     content: " <ul><li>Project: 25% </li>
                 <li>Mid Sem + End Sem: 75% (35% + 40%)</li></ul>"
