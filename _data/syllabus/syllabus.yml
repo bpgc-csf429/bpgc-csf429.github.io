@@ -3,8 +3,7 @@ syllabus:
     content: Check the (Handout)[../assets/CSF429_Handout.pdf].
 
   - heading: Books
-    content: "T1. Dan Jurafsky, James H. Martin. ”Speech and Language Processing. An Introduction to Natural Language Processing, Computational
-Linguistics, and Speech Recognition”. Prentice-Hall. 3rd edition (https://web.stanford.edu/~jurafsky/slp3/ed3book_dec302020.pdf)[Official Link for 3rd edition draft.]""
+    content: "T1. Dan Jurafsky, James H. Martin. ”Speech and Language Processing. An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition”. Prentice-Hall. 3rd edition (https://web.stanford.edu/~jurafsky/slp3/ed3book_dec302020.pdf)[Official Link for 3rd edition draft.]"
 
   - heading: Reference Books
     content: "<ol><li>Manning, Christopher, and Hinrich Schutze. ”Foundations of statistical natural language processing”. MIT press, 1999.</li>
