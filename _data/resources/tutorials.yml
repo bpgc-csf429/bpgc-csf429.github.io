@@ -1,20 +1,14 @@
 tutorial:
-  - tut: 'Lecture 1: Topic Name1' #edit Topic Name
+  - tut: 'Lecture 1: Preprocessing - Normalization and Tokenization' #edit Topic Name
     resources:
       - resource:
-          type: 'Slides'
-          link: '../assets/tutorials/Test1.pdf'
+          type: 'Notebook-Tokenization'
+          link: '../assets/tutorials/Tokenization.ipynb'
       - resource:
-          type: 'Notebook'
-          link: '../assets/notebooks/pages/test1' #Remove the .html
-      - resource:
-          type: 'Notes'
-          link: '../assets/tutorials/Test2.pdf'
-      - resource:
-          type: 'Extra Reading'
-          link: 'https://www.google.co.in/'
-    date: "25-07-21"
-    author: "Anonymous"
+          type: 'Notebook-Normalization'
+          link: '../assets/tutorials/Normalization.ipynb'
+    date: "13-09-21"
+    author: "Yash Bhartia and Vishwa Shah"
   - tut: 'Lecture 2: Topic Name2'
     resources:
       - resource:
