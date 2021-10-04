@@ -1,9 +1,14 @@
 syllabus:
-  - heading: Technology
-    content: "Check the (Handout)[../assets/CSF429_Handout.pdf]."
+
+  - heading: Handout
+    content: Check the handout for the course
+    name: Link to the handout
+    link: "/assets/CSF429_Handout.pdf"
 
   - heading: Book
-    content: "T1. Dan Jurafsky, James H. Martin. ”Speech and Language Processing. An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition”. Prentice-Hall. 3rd edition (https://web.stanford.edu/~jurafsky/slp3/ed3book_dec302020.pdf)[Official Link for 3rd edition draft.]"
+    content: "T1. Dan Jurafsky, James H. Martin. ”Speech and Language Processing. An Introduction to Natural Language Processing, Computational Linguistics, and Speech Recognition”. Prentice-Hall. 3rd edition"
+    name: "Official Link for 3rd edition draft."
+    link: "https://web.stanford.edu/~jurafsky/slp3/ed3book_dec302020.pdf"
 
   - heading: Grading Policy 
     content: " <ul><li>Project: 25% </li>
