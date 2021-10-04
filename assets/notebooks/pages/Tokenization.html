@@ -2,12 +2,35 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>test1</title>
+<title>Tokenization</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
+<script>
+(function() {
+  function addWidgetsRenderer() {
+    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
+    var scriptElement = document.createElement('script');
+    var widgetRendererSrc = 'https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js';
+    var widgetState;
 
+    // Fallback for older version:
+    try {
+      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
+
+      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
+        widgetRendererSrc = 'https://unpkg.com/jupyter-js-widgets@*/dist/embed.js';
+      }
+    } catch(e) {}
+
+    scriptElement.src = widgetRendererSrc;
+    document.body.appendChild(scriptElement);
+  }
+
+  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
+}());
+</script>
 
 <style type="text/css">
     /*!
@@ -13113,19 +13136,44 @@ div#notebook {
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 
-<p align="center"><a href="https://colab.research.google.com/github/bpgc-csf429/bpgc-csf429.github.io/blob/master/assets/notebooks/ipynb/test1.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open Collab"></a></p>
-<h1 id="This-is-a-test-notebook">This is a test notebook<a class="anchor-link" href="#This-is-a-test-notebook">&#182;</a></h1><p>Lets go</p>
-
+<p align="center"><a href="https://colab.research.google.com/github/bpgc-csf429/bpgc-csf429.github.io/blob/master/assets/notebooks/ipynb/Tokenization.ipynb"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open Collab"></a></p>
+<h1 id="Tokenization">Tokenization<a class="anchor-link" href="#Tokenization">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[1]:</div>
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="mi">4</span>
-<span class="n">x</span> <span class="o">**</span> <span class="mi">10</span>
+<div class=" highlight hl-python"><pre><span></span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;Mr. Santa was busy today; But he didn&#39;t have that much work. &quot;Hii, how are you doing? good work today!&quot;, he said.&quot;&quot;&quot;</span>
+
+<span class="n">text2</span> <span class="o">=</span> <span class="s2">&quot;such a long sentence that it proba-</span><span class="se">\</span>
+<span class="s2">bly won&#39;t fit in a single line, but here&#39;s an intra-word hyphen too! These words will not be seperated: combinedWords combinedlongwords&quot;</span>
+
+<span class="n">text3</span> <span class="o">=</span> <span class="s2">&quot;Hiii! :D how are y&#39;all doin&#39; 😀. #DailyTweet @DailyTweeter full-stops.... and a link!!? https://imgur.com/gallery/y8u0gg8. In comparision to:these f123@gmail.com a word i made up is ran&#39;om cuz i cant spel&quot;</span>
+
+<span class="n">text_hi</span> <span class="o">=</span> <span class="s2">&quot;राम-श्याम बहुत ही सामान्य नाम हैं। शनैः शनैः दिन ढल गया। अतः यह सिद्ध होता है कि सूर्य पूर्व निकलता है।&quot;</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Python-and-Regex">Python and Regex<a class="anchor-link" href="#Python-and-Regex">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -13138,13 +13186,34 @@ div#notebook {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[1]:</div>
+    <div class="prompt output_prompt">Out[&nbsp;]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>1048576</pre>
+<pre>[&#39;Mr.&#39;,
+ &#39;Santa&#39;,
+ &#39;was&#39;,
+ &#39;busy&#39;,
+ &#39;today;&#39;,
+ &#39;But&#39;,
+ &#39;he&#39;,
+ &#34;didn&#39;t&#34;,
+ &#39;have&#39;,
+ &#39;that&#39;,
+ &#39;much&#39;,
+ &#39;work.&#39;,
+ &#39;&#34;Hii,&#39;,
+ &#39;how&#39;,
+ &#39;are&#39;,
+ &#39;you&#39;,
+ &#39;doing?&#39;,
+ &#39;good&#39;,
+ &#39;work&#39;,
+ &#39;today!&#34;,&#39;,
+ &#39;he&#39;,
+ &#39;said.&#39;]</pre>
 </div>
 
 </div>
@@ -13158,7 +13227,293 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-python"><pre><span></span>
+<div class=" highlight hl-python"><pre><span></span><span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;. &quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;Mr&#39;,
+ &#34;Santa was busy today; But he didn&#39;t have that much work&#34;,
+ &#39;&#34;Hii, how are you doing? good work today!&#34;, he said.&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="n">rx</span> <span class="o">=</span> <span class="s2">r&quot;\w+(?:&#39;\w+)?|[^\w\s]&quot;</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">rx</span><span class="p">,</span> <span class="n">text</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="n">rx</span><span class="p">,</span> <span class="n">text2</span><span class="p">))</span> <span class="c1">#notice &quot;didn&#39;t&quot; is a single word</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;Mr&#39;, &#39;.&#39;, &#39;Santa&#39;, &#39;was&#39;, &#39;busy&#39;, &#39;today&#39;, &#39;;&#39;, &#39;But&#39;, &#39;he&#39;, &#34;didn&#39;t&#34;, &#39;have&#39;, &#39;that&#39;, &#39;much&#39;, &#39;work&#39;, &#39;.&#39;, &#39;&#34;&#39;, &#39;Hii&#39;, &#39;,&#39;, &#39;how&#39;, &#39;are&#39;, &#39;you&#39;, &#39;doing&#39;, &#39;?&#39;, &#39;good&#39;, &#39;work&#39;, &#39;today&#39;, &#39;!&#39;, &#39;&#34;&#39;, &#39;,&#39;, &#39;he&#39;, &#39;said&#39;, &#39;.&#39;]
+[&#39;such&#39;, &#39;a&#39;, &#39;long&#39;, &#39;sentence&#39;, &#39;that&#39;, &#39;it&#39;, &#39;proba&#39;, &#39;-&#39;, &#39;bly&#39;, &#34;won&#39;t&#34;, &#39;fit&#39;, &#39;in&#39;, &#39;a&#39;, &#39;single&#39;, &#39;line&#39;, &#39;,&#39;, &#39;but&#39;, &#34;here&#39;s&#34;, &#39;an&#39;, &#39;intra&#39;, &#39;-&#39;, &#39;word&#39;, &#39;hyphen&#39;, &#39;too&#39;, &#39;!&#39;, &#39;These&#39;, &#39;words&#39;, &#39;will&#39;, &#39;not&#39;, &#39;be&#39;, &#39;seperated&#39;, &#39;:&#39;, &#39;combinedWords&#39;, &#39;combinedlongwords&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Libraries-Discussed:">Libraries Discussed:<a class="anchor-link" href="#Libraries-Discussed:">&#182;</a></h2><ul>
+<li>nltk (fast, and useful)</li>
+<li>spacy (very useful, plenty of features)</li>
+<li>stanza (good language support)</li>
+<li>indic-nlp-library</li>
+<li>huggingFace tokenizer</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="NLTK">NLTK<a class="anchor-link" href="#NLTK">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">nltk</span>
+<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">sent_tokenize</span><span class="p">,</span> <span class="n">word_tokenize</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;punkt&#39;</span><span class="p">)</span>
+  
+<span class="k">print</span><span class="p">(</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">text2</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">text2</span><span class="p">),</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">sent_tokenize</span><span class="p">(</span><span class="n">text3</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">word_tokenize</span><span class="p">(</span><span class="n">text3</span><span class="p">))</span> <span class="c1">#cant is single word here, link is seperated</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[nltk_data] Downloading package punkt to /root/nltk_data...
+[nltk_data]   Unzipping tokenizers/punkt.zip.
+[&#34;Mr. Santa was busy today; But he didn&#39;t have that much work.&#34;, &#39;&#34;Hii, how are you doing?&#39;, &#39;good work today!&#39;, &#39;&#34;, he said.&#39;]
+[&#39;Mr.&#39;, &#39;Santa&#39;, &#39;was&#39;, &#39;busy&#39;, &#39;today&#39;, &#39;;&#39;, &#39;But&#39;, &#39;he&#39;, &#39;did&#39;, &#34;n&#39;t&#34;, &#39;have&#39;, &#39;that&#39;, &#39;much&#39;, &#39;work&#39;, &#39;.&#39;, &#39;``&#39;, &#39;Hii&#39;, &#39;,&#39;, &#39;how&#39;, &#39;are&#39;, &#39;you&#39;, &#39;doing&#39;, &#39;?&#39;, &#39;good&#39;, &#39;work&#39;, &#39;today&#39;, &#39;!&#39;, &#39;``&#39;, &#39;,&#39;, &#39;he&#39;, &#39;said&#39;, &#39;.&#39;] 
+
+[&#34;such a long sentence that it proba-bly won&#39;t fit in a single line, but here&#39;s an intra-word hyphen too!&#34;, &#39;These words will not be seperated: combinedWords combinedlongwords&#39;]
+[&#39;such&#39;, &#39;a&#39;, &#39;long&#39;, &#39;sentence&#39;, &#39;that&#39;, &#39;it&#39;, &#39;proba-bly&#39;, &#39;wo&#39;, &#34;n&#39;t&#34;, &#39;fit&#39;, &#39;in&#39;, &#39;a&#39;, &#39;single&#39;, &#39;line&#39;, &#39;,&#39;, &#39;but&#39;, &#39;here&#39;, &#34;&#39;s&#34;, &#39;an&#39;, &#39;intra-word&#39;, &#39;hyphen&#39;, &#39;too&#39;, &#39;!&#39;, &#39;These&#39;, &#39;words&#39;, &#39;will&#39;, &#39;not&#39;, &#39;be&#39;, &#39;seperated&#39;, &#39;:&#39;, &#39;combinedWords&#39;, &#39;combinedlongwords&#39;] 
+
+[&#39;Hiii!&#39;, &#34;:D how are y&#39;all doin&#39; 😀.&#34;, &#39;#DailyTweet @DailyTweeter full-stops.... and a link!!?&#39;, &#39;https://imgur.com/gallery/y8u0gg8.&#39;, &#34;In comparision to:these f123@gmail.com a word i made up is ran&#39;om cuz i cant spel&#34;]
+[&#39;Hiii&#39;, &#39;!&#39;, &#39;:&#39;, &#39;D&#39;, &#39;how&#39;, &#39;are&#39;, &#34;y&#39;all&#34;, &#39;doin&#39;, &#34;&#39;&#34;, &#39;😀&#39;, &#39;.&#39;, &#39;#&#39;, &#39;DailyTweet&#39;, &#39;@&#39;, &#39;DailyTweeter&#39;, &#39;full-stops&#39;, &#39;...&#39;, &#39;.&#39;, &#39;and&#39;, &#39;a&#39;, &#39;link&#39;, &#39;!&#39;, &#39;!&#39;, &#39;?&#39;, &#39;https&#39;, &#39;:&#39;, &#39;//imgur.com/gallery/y8u0gg8&#39;, &#39;.&#39;, &#39;In&#39;, &#39;comparision&#39;, &#39;to&#39;, &#39;:&#39;, &#39;these&#39;, &#39;f123&#39;, &#39;@&#39;, &#39;gmail.com&#39;, &#39;a&#39;, &#39;word&#39;, &#39;i&#39;, &#39;made&#39;, &#39;up&#39;, &#39;is&#39;, &#34;ran&#39;om&#34;, &#39;cuz&#39;, &#39;i&#39;, &#39;cant&#39;, &#39;spel&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Spacy">Spacy<a class="anchor-link" href="#Spacy">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">U</span> <span class="n">spacy</span>
+<span class="err">!</span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">spacy</span> <span class="n">download</span> <span class="n">en</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Requirement already satisfied: spacy in /usr/local/lib/python3.7/dist-packages (2.2.4)
+Collecting spacy
+  Downloading spacy-3.1.2-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.8 MB)
+     |████████████████████████████████| 5.8 MB 4.2 MB/s 
+Requirement already satisfied: packaging&gt;=20.0 in /usr/local/lib/python3.7/dist-packages (from spacy) (21.0)
+Requirement already satisfied: blis&lt;0.8.0,&gt;=0.4.0 in /usr/local/lib/python3.7/dist-packages (from spacy) (0.4.1)
+Requirement already satisfied: typing-extensions&lt;4.0.0.0,&gt;=3.7.4 in /usr/local/lib/python3.7/dist-packages (from spacy) (3.7.4.3)
+Requirement already satisfied: cymem&lt;2.1.0,&gt;=2.0.2 in /usr/local/lib/python3.7/dist-packages (from spacy) (2.0.5)
+Collecting pathy&gt;=0.3.5
+  Downloading pathy-0.6.0-py3-none-any.whl (42 kB)
+     |████████████████████████████████| 42 kB 1.4 MB/s 
+Collecting catalogue&lt;2.1.0,&gt;=2.0.4
+  Downloading catalogue-2.0.6-py3-none-any.whl (17 kB)
+Collecting spacy-legacy&lt;3.1.0,&gt;=3.0.7
+  Downloading spacy_legacy-3.0.8-py2.py3-none-any.whl (14 kB)
+Requirement already satisfied: wasabi&lt;1.1.0,&gt;=0.8.1 in /usr/local/lib/python3.7/dist-packages (from spacy) (0.8.2)
+Collecting srsly&lt;3.0.0,&gt;=2.4.1
+  Downloading srsly-2.4.1-cp37-cp37m-manylinux2014_x86_64.whl (456 kB)
+     |████████████████████████████████| 456 kB 49.9 MB/s 
+Requirement already satisfied: requests&lt;3.0.0,&gt;=2.13.0 in /usr/local/lib/python3.7/dist-packages (from spacy) (2.23.0)
+Requirement already satisfied: setuptools in /usr/local/lib/python3.7/dist-packages (from spacy) (57.4.0)
+Collecting pydantic!=1.8,!=1.8.1,&lt;1.9.0,&gt;=1.7.4
+  Downloading pydantic-1.8.2-cp37-cp37m-manylinux2014_x86_64.whl (10.1 MB)
+     |████████████████████████████████| 10.1 MB 26.6 MB/s 
+Requirement already satisfied: tqdm&lt;5.0.0,&gt;=4.38.0 in /usr/local/lib/python3.7/dist-packages (from spacy) (4.62.0)
+Collecting typer&lt;0.4.0,&gt;=0.3.0
+  Downloading typer-0.3.2-py3-none-any.whl (21 kB)
+Requirement already satisfied: preshed&lt;3.1.0,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from spacy) (3.0.5)
+Requirement already satisfied: jinja2 in /usr/local/lib/python3.7/dist-packages (from spacy) (2.11.3)
+Collecting thinc&lt;8.1.0,&gt;=8.0.8
+  Downloading thinc-8.0.10-cp37-cp37m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (623 kB)
+     |████████████████████████████████| 623 kB 70.7 MB/s 
+Requirement already satisfied: murmurhash&lt;1.1.0,&gt;=0.28.0 in /usr/local/lib/python3.7/dist-packages (from spacy) (1.0.5)
+Requirement already satisfied: numpy&gt;=1.15.0 in /usr/local/lib/python3.7/dist-packages (from spacy) (1.19.5)
+Requirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.7/dist-packages (from catalogue&lt;2.1.0,&gt;=2.0.4-&gt;spacy) (3.5.0)
+Requirement already satisfied: pyparsing&gt;=2.0.2 in /usr/local/lib/python3.7/dist-packages (from packaging&gt;=20.0-&gt;spacy) (2.4.7)
+Requirement already satisfied: smart-open&lt;6.0.0,&gt;=5.0.0 in /usr/local/lib/python3.7/dist-packages (from pathy&gt;=0.3.5-&gt;spacy) (5.1.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (2021.5.30)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (2.10)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (1.24.3)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy) (3.0.4)
+Requirement already satisfied: click&lt;7.2.0,&gt;=7.1.1 in /usr/local/lib/python3.7/dist-packages (from typer&lt;0.4.0,&gt;=0.3.0-&gt;spacy) (7.1.2)
+Requirement already satisfied: MarkupSafe&gt;=0.23 in /usr/local/lib/python3.7/dist-packages (from jinja2-&gt;spacy) (2.0.1)
+Installing collected packages: catalogue, typer, srsly, pydantic, thinc, spacy-legacy, pathy, spacy
+  Attempting uninstall: catalogue
+    Found existing installation: catalogue 1.0.0
+    Uninstalling catalogue-1.0.0:
+      Successfully uninstalled catalogue-1.0.0
+  Attempting uninstall: srsly
+    Found existing installation: srsly 1.0.5
+    Uninstalling srsly-1.0.5:
+      Successfully uninstalled srsly-1.0.5
+  Attempting uninstall: thinc
+    Found existing installation: thinc 7.4.0
+    Uninstalling thinc-7.4.0:
+      Successfully uninstalled thinc-7.4.0
+  Attempting uninstall: spacy
+    Found existing installation: spacy 2.2.4
+    Uninstalling spacy-2.2.4:
+      Successfully uninstalled spacy-2.2.4
+Successfully installed catalogue-2.0.6 pathy-0.6.0 pydantic-1.8.2 spacy-3.1.2 spacy-legacy-3.0.8 srsly-2.4.1 thinc-8.0.10 typer-0.3.2
+<span class="ansi-yellow-fg">⚠ As of spaCy v3.0, shortcuts like &#39;en&#39; are deprecated. Please use the
+full pipeline package name &#39;en_core_web_sm&#39; instead.</span>
+Collecting en-core-web-sm==3.1.0
+  Downloading https://github.com/explosion/spacy-models/releases/download/en_core_web_sm-3.1.0/en_core_web_sm-3.1.0-py3-none-any.whl (13.6 MB)
+     |████████████████████████████████| 13.6 MB 74 kB/s 
+Requirement already satisfied: spacy&lt;3.2.0,&gt;=3.1.0 in /usr/local/lib/python3.7/dist-packages (from en-core-web-sm==3.1.0) (3.1.2)
+Requirement already satisfied: spacy-legacy&lt;3.1.0,&gt;=3.0.7 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (3.0.8)
+Requirement already satisfied: cymem&lt;2.1.0,&gt;=2.0.2 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (2.0.5)
+Requirement already satisfied: typer&lt;0.4.0,&gt;=0.3.0 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (0.3.2)
+Requirement already satisfied: tqdm&lt;5.0.0,&gt;=4.38.0 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (4.62.0)
+Requirement already satisfied: typing-extensions&lt;4.0.0.0,&gt;=3.7.4 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (3.7.4.3)
+Requirement already satisfied: pathy&gt;=0.3.5 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (0.6.0)
+Requirement already satisfied: packaging&gt;=20.0 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (21.0)
+Requirement already satisfied: murmurhash&lt;1.1.0,&gt;=0.28.0 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (1.0.5)
+Requirement already satisfied: setuptools in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (57.4.0)
+Requirement already satisfied: wasabi&lt;1.1.0,&gt;=0.8.1 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (0.8.2)
+Requirement already satisfied: numpy&gt;=1.15.0 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (1.19.5)
+Requirement already satisfied: thinc&lt;8.1.0,&gt;=8.0.8 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (8.0.10)
+Requirement already satisfied: requests&lt;3.0.0,&gt;=2.13.0 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (2.23.0)
+Requirement already satisfied: preshed&lt;3.1.0,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (3.0.5)
+Requirement already satisfied: blis&lt;0.8.0,&gt;=0.4.0 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (0.4.1)
+Requirement already satisfied: pydantic!=1.8,!=1.8.1,&lt;1.9.0,&gt;=1.7.4 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (1.8.2)
+Requirement already satisfied: srsly&lt;3.0.0,&gt;=2.4.1 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (2.4.1)
+Requirement already satisfied: jinja2 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (2.11.3)
+Requirement already satisfied: catalogue&lt;2.1.0,&gt;=2.0.4 in /usr/local/lib/python3.7/dist-packages (from spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (2.0.6)
+Requirement already satisfied: zipp&gt;=0.5 in /usr/local/lib/python3.7/dist-packages (from catalogue&lt;2.1.0,&gt;=2.0.4-&gt;spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (3.5.0)
+Requirement already satisfied: pyparsing&gt;=2.0.2 in /usr/local/lib/python3.7/dist-packages (from packaging&gt;=20.0-&gt;spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (2.4.7)
+Requirement already satisfied: smart-open&lt;6.0.0,&gt;=5.0.0 in /usr/local/lib/python3.7/dist-packages (from pathy&gt;=0.3.5-&gt;spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (5.1.0)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (2021.5.30)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (2.10)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (1.24.3)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests&lt;3.0.0,&gt;=2.13.0-&gt;spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (3.0.4)
+Requirement already satisfied: click&lt;7.2.0,&gt;=7.1.1 in /usr/local/lib/python3.7/dist-packages (from typer&lt;0.4.0,&gt;=0.3.0-&gt;spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (7.1.2)
+Requirement already satisfied: MarkupSafe&gt;=0.23 in /usr/local/lib/python3.7/dist-packages (from jinja2-&gt;spacy&lt;3.2.0,&gt;=3.1.0-&gt;en-core-web-sm==3.1.0) (2.0.1)
+Installing collected packages: en-core-web-sm
+  Attempting uninstall: en-core-web-sm
+    Found existing installation: en-core-web-sm 2.2.5
+    Uninstalling en-core-web-sm-2.2.5:
+      Successfully uninstalled en-core-web-sm-2.2.5
+Successfully installed en-core-web-sm-3.1.0
+<span class="ansi-green-fg">✔ Download and installation successful</span>
+You can now load the package via spacy.load(&#39;en_core_web_sm&#39;)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="c1"># Load tokenizer, tagger, parser, NER and word vectors</span>
+<span class="kn">from</span> <span class="nn">spacy.lang.hi</span> <span class="kn">import</span> <span class="n">Hindi</span>
+<span class="kn">from</span> <span class="nn">spacy.lang.en</span> <span class="kn">import</span> <span class="n">English</span>
 </pre></div>
 
     </div>
@@ -13166,11 +13521,1406 @@ div#notebook {
 </div>
 
 </div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">nlp</span> <span class="o">=</span> <span class="n">English</span><span class="p">()</span>
+<span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="s1">&#39;sentencizer&#39;</span><span class="p">)</span>
+
+
+<span class="c1">#  &quot;nlp&quot; Object is used to create documents with linguistic annotations.</span>
+<span class="n">my_doc</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<span class="n">my_doc2</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text2</span><span class="p">)</span>
+<span class="n">my_doc3</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text3</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">my_doc</span><span class="o">.</span><span class="n">sents</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sent</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">my_doc2</span><span class="o">.</span><span class="n">sents</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sent</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Mr. Santa was busy today; But he didn&#39;t have that much work. &#34;
+Hii, how are you doing?
+good work today!&#34;,
+he said.
+such a long sentence that it proba-bly won&#39;t fit in a single line, but here&#39;s an intra-word hyphen too!
+These words will not be seperated: combinedWords combinedlongwords
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">token_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">my_doc</span><span class="p">:</span>
+    <span class="n">token_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;Mr.&#39;, &#39;Santa&#39;, &#39;was&#39;, &#39;busy&#39;, &#39;today&#39;, &#39;;&#39;, &#39;But&#39;, &#39;he&#39;, &#39;did&#39;, &#34;n&#39;t&#34;, &#39;have&#39;, &#39;that&#39;, &#39;much&#39;, &#39;work&#39;, &#39;.&#39;, &#39;&#34;&#39;, &#39;Hii&#39;, &#39;,&#39;, &#39;how&#39;, &#39;are&#39;, &#39;you&#39;, &#39;doing&#39;, &#39;?&#39;, &#39;good&#39;, &#39;work&#39;, &#39;today&#39;, &#39;!&#39;, &#39;&#34;&#39;, &#39;,&#39;, &#39;he&#39;, &#39;said&#39;, &#39;.&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">token_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">my_doc2</span><span class="p">:</span>
+    <span class="n">token_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;such&#39;, &#39;a&#39;, &#39;long&#39;, &#39;sentence&#39;, &#39;that&#39;, &#39;it&#39;, &#39;proba&#39;, &#39;-&#39;, &#39;bly&#39;, &#39;wo&#39;, &#34;n&#39;t&#34;, &#39;fit&#39;, &#39;in&#39;, &#39;a&#39;, &#39;single&#39;, &#39;line&#39;, &#39;,&#39;, &#39;but&#39;, &#39;here&#39;, &#34;&#39;s&#34;, &#39;an&#39;, &#39;intra&#39;, &#39;-&#39;, &#39;word&#39;, &#39;hyphen&#39;, &#39;too&#39;, &#39;!&#39;, &#39;These&#39;, &#39;words&#39;, &#39;will&#39;, &#39;not&#39;, &#39;be&#39;, &#39;seperated&#39;, &#39;:&#39;, &#39;combinedWords&#39;, &#39;combinedlongwords&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">token_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">my_doc3</span><span class="p">:</span>
+    <span class="n">token_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="n">token_list</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;Hiii&#39;,
+ &#39;!&#39;,
+ &#39;:D&#39;,
+ &#39;how&#39;,
+ &#39;are&#39;,
+ &#34;y&#39;&#34;,
+ &#39;all&#39;,
+ &#34;doin&#39;&#34;,
+ &#39;😀&#39;,
+ &#39;.&#39;,
+ &#39;#&#39;,
+ &#39;DailyTweet&#39;,
+ &#39;@DailyTweeter&#39;,
+ &#39;full&#39;,
+ &#39;-&#39;,
+ &#39;stops&#39;,
+ &#39;....&#39;,
+ &#39;and&#39;,
+ &#39;a&#39;,
+ &#39;link&#39;,
+ &#39;!&#39;,
+ &#39;!&#39;,
+ &#39;?&#39;,
+ &#39;https://imgur.com/gallery/y8u0gg8&#39;,
+ &#39;.&#39;,
+ &#39;In&#39;,
+ &#39;comparision&#39;,
+ &#39;to&#39;,
+ &#39;:&#39;,
+ &#39;these&#39;,
+ &#39;f123@gmail.com&#39;,
+ &#39;a&#39;,
+ &#39;word&#39;,
+ &#39;i&#39;,
+ &#39;made&#39;,
+ &#39;up&#39;,
+ &#39;is&#39;,
+ &#34;ran&#39;om&#34;,
+ &#39;cuz&#39;,
+ &#39;i&#39;,
+ &#39;ca&#39;,
+ &#39;nt&#39;,
+ &#39;spel&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">nlp</span> <span class="o">=</span> <span class="n">Hindi</span><span class="p">()</span>
+<span class="n">nlp</span><span class="o">.</span><span class="n">add_pipe</span><span class="p">(</span><span class="s1">&#39;sentencizer&#39;</span><span class="p">)</span>
+
+<span class="n">my_doc_hi</span> <span class="o">=</span> <span class="n">nlp</span><span class="p">(</span><span class="n">text_hi</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">sent</span> <span class="ow">in</span> <span class="n">my_doc_hi</span><span class="o">.</span><span class="n">sents</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sent</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>राम-श्याम बहुत ही सामान्य नाम हैं।
+शनैः शनैः दिन ढल गया।
+अतः यह सिद्ध होता है कि सूर्य पूर्व निकलता है।
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">token_list</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">my_doc_hi</span><span class="p">:</span>
+    <span class="n">token_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">token</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">print</span><span class="p">(</span><span class="n">token_list</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;राम&#39;, &#39;-&#39;, &#39;श्याम&#39;, &#39;बहुत&#39;, &#39;ही&#39;, &#39;सामान्य&#39;, &#39;नाम&#39;, &#39;हैं&#39;, &#39;।&#39;, &#39;शनैः&#39;, &#39;शनैः&#39;, &#39;दिन&#39;, &#39;ढल&#39;, &#39;गया&#39;, &#39;।&#39;, &#39;अतः&#39;, &#39;यह&#39;, &#39;सिद्ध&#39;, &#39;होता&#39;, &#39;है&#39;, &#39;कि&#39;, &#39;सूर्य&#39;, &#39;पूर्व&#39;, &#39;निकलता&#39;, &#39;है&#39;, &#39;।&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Indic-nlp">Indic-nlp<a class="anchor-link" href="#Indic-nlp">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">indic</span><span class="o">-</span><span class="n">nlp</span><span class="o">-</span><span class="n">library</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Collecting indic-nlp-library
+  Downloading indic_nlp_library-0.81-py3-none-any.whl (40 kB)
+     |████████████████████████████████| 40 kB 3.1 MB/s 
+Requirement already satisfied: pandas in /usr/local/lib/python3.7/dist-packages (from indic-nlp-library) (1.1.5)
+Collecting sphinx-argparse
+  Downloading sphinx_argparse-0.3.1-py2.py3-none-any.whl (12 kB)
+Collecting morfessor
+  Downloading Morfessor-2.0.6-py3-none-any.whl (35 kB)
+Collecting sphinx-rtd-theme
+  Downloading sphinx_rtd_theme-0.5.2-py2.py3-none-any.whl (9.1 MB)
+     |████████████████████████████████| 9.1 MB 7.0 MB/s 
+Requirement already satisfied: numpy in /usr/local/lib/python3.7/dist-packages (from indic-nlp-library) (1.19.5)
+Requirement already satisfied: pytz&gt;=2017.2 in /usr/local/lib/python3.7/dist-packages (from pandas-&gt;indic-nlp-library) (2018.9)
+Requirement already satisfied: python-dateutil&gt;=2.7.3 in /usr/local/lib/python3.7/dist-packages (from pandas-&gt;indic-nlp-library) (2.8.2)
+Requirement already satisfied: six&gt;=1.5 in /usr/local/lib/python3.7/dist-packages (from python-dateutil&gt;=2.7.3-&gt;pandas-&gt;indic-nlp-library) (1.15.0)
+Requirement already satisfied: sphinx&gt;=1.2.0 in /usr/local/lib/python3.7/dist-packages (from sphinx-argparse-&gt;indic-nlp-library) (1.8.5)
+Requirement already satisfied: sphinxcontrib-websupport in /usr/local/lib/python3.7/dist-packages (from sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (1.2.4)
+Requirement already satisfied: imagesize in /usr/local/lib/python3.7/dist-packages (from sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (1.2.0)
+Requirement already satisfied: setuptools in /usr/local/lib/python3.7/dist-packages (from sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (57.4.0)
+Requirement already satisfied: babel!=2.0,&gt;=1.3 in /usr/local/lib/python3.7/dist-packages (from sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (2.9.1)
+Requirement already satisfied: alabaster&lt;0.8,&gt;=0.7 in /usr/local/lib/python3.7/dist-packages (from sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (0.7.12)
+Requirement already satisfied: docutils&gt;=0.11 in /usr/local/lib/python3.7/dist-packages (from sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (0.17.1)
+Requirement already satisfied: Pygments&gt;=2.0 in /usr/local/lib/python3.7/dist-packages (from sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (2.6.1)
+Requirement already satisfied: packaging in /usr/local/lib/python3.7/dist-packages (from sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (21.0)
+Requirement already satisfied: Jinja2&gt;=2.3 in /usr/local/lib/python3.7/dist-packages (from sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (2.11.3)
+Requirement already satisfied: snowballstemmer&gt;=1.1 in /usr/local/lib/python3.7/dist-packages (from sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (2.1.0)
+Requirement already satisfied: requests&gt;=2.0.0 in /usr/local/lib/python3.7/dist-packages (from sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (2.23.0)
+Requirement already satisfied: MarkupSafe&gt;=0.23 in /usr/local/lib/python3.7/dist-packages (from Jinja2&gt;=2.3-&gt;sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (2.0.1)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.0.0-&gt;sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (1.24.3)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.0.0-&gt;sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (3.0.4)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.0.0-&gt;sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (2021.5.30)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.7/dist-packages (from requests&gt;=2.0.0-&gt;sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (2.10)
+Requirement already satisfied: pyparsing&gt;=2.0.2 in /usr/local/lib/python3.7/dist-packages (from packaging-&gt;sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (2.4.7)
+Collecting docutils&gt;=0.11
+  Downloading docutils-0.16-py2.py3-none-any.whl (548 kB)
+     |████████████████████████████████| 548 kB 69.4 MB/s 
+Requirement already satisfied: sphinxcontrib-serializinghtml in /usr/local/lib/python3.7/dist-packages (from sphinxcontrib-websupport-&gt;sphinx&gt;=1.2.0-&gt;sphinx-argparse-&gt;indic-nlp-library) (1.1.5)
+Installing collected packages: docutils, sphinx-rtd-theme, sphinx-argparse, morfessor, indic-nlp-library
+  Attempting uninstall: docutils
+    Found existing installation: docutils 0.17.1
+    Uninstalling docutils-0.17.1:
+      Successfully uninstalled docutils-0.17.1
+<span class="ansi-red-fg">ERROR: pip&#39;s dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+datascience 0.10.6 requires folium==0.2.1, but you have folium 0.8.3 which is incompatible.</span>
+Successfully installed docutils-0.16 indic-nlp-library-0.81 morfessor-2.0.6 sphinx-argparse-0.3.1 sphinx-rtd-theme-0.5.2
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">indicnlp.tokenize</span> <span class="kn">import</span> <span class="n">indic_tokenize</span>  
+<span class="n">indic_string</span><span class="o">=</span> <span class="n">text_hi</span>
+<span class="n">indic_tokenize</span><span class="o">.</span><span class="n">trivial_tokenize</span><span class="p">(</span><span class="n">indic_string</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[&#39;राम&#39;,
+ &#39;-&#39;,
+ &#39;श्याम&#39;,
+ &#39;बहुत&#39;,
+ &#39;ही&#39;,
+ &#39;सामान्य&#39;,
+ &#39;नाम&#39;,
+ &#39;हैं&#39;,
+ &#39;।&#39;,
+ &#39;शनैः&#39;,
+ &#39;शनैः&#39;,
+ &#39;दिन&#39;,
+ &#39;ढल&#39;,
+ &#39;गया&#39;,
+ &#39;।&#39;,
+ &#39;अतः&#39;,
+ &#39;यह&#39;,
+ &#39;सिद्ध&#39;,
+ &#39;होता&#39;,
+ &#39;है&#39;,
+ &#39;कि&#39;,
+ &#39;सूर्य&#39;,
+ &#39;पूर्व&#39;,
+ &#39;निकलता&#39;,
+ &#39;है&#39;,
+ &#39;।&#39;]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Stanza">Stanza<a class="anchor-link" href="#Stanza">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">stanza</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Collecting stanza
+  Downloading stanza-1.2.3-py3-none-any.whl (342 kB)
+     |████████████████████████████████| 342 kB 5.1 MB/s 
+Requirement already satisfied: protobuf in /usr/local/lib/python3.7/dist-packages (from stanza) (3.17.3)
+Requirement already satisfied: torch&gt;=1.3.0 in /usr/local/lib/python3.7/dist-packages (from stanza) (1.9.0+cu102)
+Requirement already satisfied: tqdm in /usr/local/lib/python3.7/dist-packages (from stanza) (4.62.0)
+Requirement already satisfied: requests in /usr/local/lib/python3.7/dist-packages (from stanza) (2.23.0)
+Requirement already satisfied: numpy in /usr/local/lib/python3.7/dist-packages (from stanza) (1.19.5)
+Requirement already satisfied: typing-extensions in /usr/local/lib/python3.7/dist-packages (from torch&gt;=1.3.0-&gt;stanza) (3.7.4.3)
+Requirement already satisfied: six&gt;=1.9 in /usr/local/lib/python3.7/dist-packages (from protobuf-&gt;stanza) (1.15.0)
+Requirement already satisfied: chardet&lt;4,&gt;=3.0.2 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;stanza) (3.0.4)
+Requirement already satisfied: certifi&gt;=2017.4.17 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;stanza) (2021.5.30)
+Requirement already satisfied: idna&lt;3,&gt;=2.5 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;stanza) (2.10)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,&lt;1.26,&gt;=1.21.1 in /usr/local/lib/python3.7/dist-packages (from requests-&gt;stanza) (1.24.3)
+Installing collected packages: stanza
+Successfully installed stanza-1.2.3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">import</span> <span class="nn">stanza</span>
+<span class="n">stanza</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">)</span>
+<span class="n">stanza</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;hi&#39;</span><span class="p">)</span>
+<span class="n">stanza</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;ko&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+ 
+ 
+<div id="ed8e8ca0-ee49-47b0-8653-2a7e62cd8159"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#ed8e8ca0-ee49-47b0-8653-2a7e62cd8159');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "ec3e7fb1ad93495485f4c6dc7b9c2dc1", "version_minor": 0, "version_major": 2}
+</script>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2021-09-13 12:13:41 INFO: Downloading default packages for language: ko (Korean)...
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+ 
+ 
+<div id="1fb15c9a-4bdd-4197-ad86-02872ab57baf"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#1fb15c9a-4bdd-4197-ad86-02872ab57baf');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "2d830c2555d04ec68321bd6b78bd2c2e", "version_minor": 0, "version_major": 2}
+</script>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2021-09-13 12:14:22 INFO: Finished downloading models and saved to /root/stanza_resources.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">stanza</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;ja&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+ 
+ 
+<div id="c5f803c0-25fc-411f-bcc9-20e15f7cc393"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#c5f803c0-25fc-411f-bcc9-20e15f7cc393');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "de78b8ad91c8487f9dec6a780953c054", "version_minor": 0, "version_major": 2}
+</script>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2021-09-13 05:31:36 INFO: Downloading default packages for language: ja (Japanese)...
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+ 
+ 
+<div id="2d6899c4-8e99-4370-9cb0-d8b76e3e17e8"></div>
+<div class="output_subarea output_widget_view ">
+<script type="text/javascript">
+var element = $('#2d6899c4-8e99-4370-9cb0-d8b76e3e17e8');
+</script>
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id": "e24a6bcf60f54a21a8ae502116387cd4", "version_minor": 0, "version_major": 2}
+</script>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2021-09-13 05:32:16 INFO: Finished downloading models and saved to /root/stanza_resources.
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">nlpEn</span> <span class="o">=</span> <span class="n">stanza</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">lang</span><span class="o">=</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="n">processors</span><span class="o">=</span><span class="s1">&#39;tokenize&#39;</span><span class="p">)</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">nlpEn</span><span class="p">(</span><span class="n">text</span><span class="p">)</span> 
+<span class="n">doc2</span> <span class="o">=</span> <span class="n">nlpEn</span><span class="p">(</span><span class="n">text2</span><span class="p">)</span>
+<span class="n">doc3</span> <span class="o">=</span> <span class="n">nlpEn</span><span class="p">(</span><span class="n">text3</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">sentences</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc2</span><span class="o">.</span><span class="n">sentences</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2021-09-13 05:44:48 INFO: Loading these models for language: en (English):
+========================
+| Processor | Package  |
+------------------------
+| tokenize  | combined |
+========================
+
+2021-09-13 05:44:48 INFO: Use device: cpu
+2021-09-13 05:44:48 INFO: Loading: tokenize
+2021-09-13 05:44:48 INFO: Done loading processors!
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Mr. Santa was busy today;
+But he didn&#39;t have that much work.
+&#34;Hii, how are you doing?
+good work today!&#34;, he said.
+such a long sentence that it proba-bly won&#39;t fit in a single line, but here&#39;s an intra-word hyphen too!
+These words will not be seperated: combined
+Words combinedlongwords
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc2</span><span class="o">.</span><span class="n">sentences</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;====== Sentence {i+1} tokens =======&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">f</span><span class="s1">&#39;id: {token.id}</span><span class="se">\t</span><span class="s1">text: {token.text}&#39;</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sentence</span><span class="o">.</span><span class="n">tokens</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>====== Sentence 1 tokens =======
+id: (1,)	text: such
+id: (2,)	text: a
+id: (3,)	text: long
+id: (4,)	text: sentence
+id: (5,)	text: that
+id: (6,)	text: it
+id: (7,)	text: proba-bly
+id: (8,)	text: wo
+id: (9,)	text: n&#39;t
+id: (10,)	text: fit
+id: (11,)	text: in
+id: (12,)	text: a
+id: (13,)	text: single
+id: (14,)	text: line
+id: (15,)	text: ,
+id: (16,)	text: but
+id: (17,)	text: here
+id: (18,)	text: &#39;s
+id: (19,)	text: an
+id: (20,)	text: intra-word
+id: (21,)	text: hyphen
+id: (22,)	text: too
+id: (23,)	text: !
+====== Sentence 2 tokens =======
+id: (1,)	text: These
+id: (2,)	text: words
+id: (3,)	text: will
+id: (4,)	text: not
+id: (5,)	text: be
+id: (6,)	text: seperated
+id: (7,)	text: :
+id: (8,)	text: combined
+====== Sentence 3 tokens =======
+id: (1,)	text: Words
+id: (2,)	text: combinedlongwords
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc3</span><span class="o">.</span><span class="n">sentences</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;====== Sentence {i+1} tokens =======&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">f</span><span class="s1">&#39;id: {token.id}</span><span class="se">\t</span><span class="s1">text: {token.text}&#39;</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sentence</span><span class="o">.</span><span class="n">tokens</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>====== Sentence 1 tokens =======
+id: (1,)	text: Hiii
+id: (2,)	text: !
+id: (3,)	text: :
+id: (4,)	text: D
+id: (5,)	text: how
+id: (6,)	text: are
+id: (7,)	text: y&#39;all
+id: (8,)	text: doin
+id: (9,)	text: &#39;
+id: (10,)	text: 😀.
+id: (11,)	text: #
+id: (12,)	text: Daily
+====== Sentence 2 tokens =======
+id: (1,)	text: Tweet
+id: (2,)	text: @
+id: (3,)	text: Daily
+====== Sentence 3 tokens =======
+id: (1,)	text: Tweeter
+id: (2,)	text: full-stops
+id: (3,)	text: ....
+id: (4,)	text: and
+id: (5,)	text: a
+id: (6,)	text: link
+id: (7,)	text: !!?
+====== Sentence 4 tokens =======
+id: (1,)	text: https://imgur.com/gallery/y8u0gg8.
+====== Sentence 5 tokens =======
+id: (1,)	text: In
+id: (2,)	text: comparision
+id: (3,)	text: to
+id: (4,)	text: :
+id: (5,)	text: these
+id: (6,)	text: f123@gmail.com
+id: (7,)	text: a
+id: (8,)	text: word
+id: (9,)	text: i
+id: (10,)	text: made
+id: (11,)	text: up
+id: (12,)	text: is
+id: (13,)	text: ran
+id: (14,)	text: &#39;om
+id: (15,)	text: cuz
+id: (16,)	text: i
+id: (17,)	text: cant
+id: (18,)	text: spel
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">nlpHi</span> <span class="o">=</span> <span class="n">stanza</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">lang</span><span class="o">=</span><span class="s1">&#39;hi&#39;</span><span class="p">,</span> <span class="n">processors</span><span class="o">=</span><span class="s1">&#39;tokenize&#39;</span><span class="p">)</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">nlpHi</span><span class="p">(</span><span class="n">text_hi</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">sentences</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;====== Sentence {i+1} tokens =======&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">f</span><span class="s1">&#39;id: {token.id}</span><span class="se">\t</span><span class="s1">text: {token.text}&#39;</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sentence</span><span class="o">.</span><span class="n">tokens</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2021-09-13 05:44:52 INFO: Loading these models for language: hi (Hindi):
+=======================
+| Processor | Package |
+-----------------------
+| tokenize  | hdtb    |
+=======================
+
+2021-09-13 05:44:52 INFO: Use device: cpu
+2021-09-13 05:44:52 INFO: Loading: tokenize
+2021-09-13 05:44:52 INFO: Done loading processors!
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>====== Sentence 1 tokens =======
+id: (1,)	text: राम-श्याम
+id: (2,)	text: बहुत
+id: (3,)	text: ही
+id: (4,)	text: सामान्य
+id: (5,)	text: नाम
+id: (6,)	text: हैं
+id: (7,)	text: ।
+====== Sentence 2 tokens =======
+id: (1,)	text: शनैः
+id: (2,)	text: शनैः
+id: (3,)	text: दिन
+id: (4,)	text: ढल
+id: (5,)	text: गया
+id: (6,)	text: ।
+====== Sentence 3 tokens =======
+id: (1,)	text: अतः
+id: (2,)	text: यह
+id: (3,)	text: सिद्ध
+id: (4,)	text: होता
+id: (5,)	text: है
+id: (6,)	text: कि
+id: (7,)	text: सूर्य
+id: (8,)	text: पूर्व
+id: (9,)	text: निकलता
+id: (10,)	text: है
+id: (11,)	text: ।
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">nlpJa</span> <span class="o">=</span> <span class="n">stanza</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">lang</span><span class="o">=</span><span class="s1">&#39;ja&#39;</span><span class="p">,</span> <span class="n">processors</span><span class="o">=</span><span class="s1">&#39;tokenize&#39;</span><span class="p">)</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">nlpJa</span><span class="p">(</span><span class="s1">&#39;これは小さな文章です。これは別の小さな文です.&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">sentences</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;====== Sentence {i+1} tokens =======&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">f</span><span class="s1">&#39;id: {token.id}</span><span class="se">\t</span><span class="s1">text: {token.text}&#39;</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sentence</span><span class="o">.</span><span class="n">tokens</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2021-09-13 05:48:11 INFO: Loading these models for language: ja (Japanese):
+=======================
+| Processor | Package |
+-----------------------
+| tokenize  | gsd     |
+=======================
+
+2021-09-13 05:48:11 INFO: Use device: cpu
+2021-09-13 05:48:11 INFO: Loading: tokenize
+2021-09-13 05:48:11 INFO: Done loading processors!
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>====== Sentence 1 tokens =======
+id: (1,)	text: これ
+id: (2,)	text: は
+id: (3,)	text: 小さな
+id: (4,)	text: 文章
+id: (5,)	text: です
+id: (6,)	text: 。
+====== Sentence 2 tokens =======
+id: (1,)	text: これ
+id: (2,)	text: は
+id: (3,)	text: 別
+id: (4,)	text: の
+id: (5,)	text: 小さな
+id: (6,)	text: 文
+id: (7,)	text: です
+id: (8,)	text: .
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">nlpKo</span> <span class="o">=</span> <span class="n">stanza</span><span class="o">.</span><span class="n">Pipeline</span><span class="p">(</span><span class="n">lang</span><span class="o">=</span><span class="s1">&#39;ko&#39;</span><span class="p">,</span> <span class="n">processors</span><span class="o">=</span><span class="s1">&#39;tokenize&#39;</span><span class="p">)</span>
+<span class="n">doc</span> <span class="o">=</span> <span class="n">nlpKo</span><span class="p">(</span><span class="s1">&#39;이것은 문장입니다. 이것은 다른 문장입니다.&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">doc</span><span class="o">.</span><span class="n">sentences</span><span class="p">):</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">f</span><span class="s1">&#39;====== Sentence {i+1} tokens =======&#39;</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="o">*</span><span class="p">[</span><span class="n">f</span><span class="s1">&#39;id: {token.id}</span><span class="se">\t</span><span class="s1">text: {token.text}&#39;</span> <span class="k">for</span> <span class="n">token</span> <span class="ow">in</span> <span class="n">sentence</span><span class="o">.</span><span class="n">tokens</span><span class="p">],</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1"># 입니다 can be further tokenized</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>2021-09-13 12:54:11 INFO: Loading these models for language: ko (Korean):
+=======================
+| Processor | Package |
+-----------------------
+| tokenize  | kaist   |
+=======================
+
+2021-09-13 12:54:11 INFO: Use device: cpu
+2021-09-13 12:54:11 INFO: Loading: tokenize
+2021-09-13 12:54:11 INFO: Done loading processors!
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>====== Sentence 1 tokens =======
+id: (1,)	text: 이것은
+id: (2,)	text: 문장입니다
+id: (3,)	text: .
+====== Sentence 2 tokens =======
+id: (1,)	text: 이것은
+id: (2,)	text: 다른
+id: (3,)	text: 문장입니다
+id: (4,)	text: .
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Maximum-matching-algorithm">Maximum matching algorithm<a class="anchor-link" href="#Maximum-matching-algorithm">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>Start with first character of the given string.</li>
+<li>Search the longest word in list starting with this character.</li>
+<li><em>If</em> match is found, boundary is marked. <em>Else</em>, character is treated as word.</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">random</span> <span class="kn">import</span> <span class="n">sample</span>
+<span class="n">nltk</span><span class="o">.</span><span class="n">download</span><span class="p">(</span><span class="s1">&#39;words&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[nltk_data] Downloading package words to /root/nltk_data...
+[nltk_data]   Unzipping corpora/words.zip.
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[&nbsp;]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">words</span>
+
+<span class="n">lowercaseCorpus</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">words</span><span class="o">.</span><span class="n">words</span><span class="p">()]</span>
+<span class="k">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">lowercaseCorpus</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">sample</span><span class="p">(</span><span class="n">lowercaseCorpus</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>236736
+[&#39;spirula&#39;, &#39;waitress&#39;, &#39;rabbinate&#39;, &#39;phasotropy&#39;, &#39;dorsabdominal&#39;, &#39;undecipher&#39;, &#39;upwall&#39;, &#39;undone&#39;, &#39;valvulotome&#39;, &#39;demipronation&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="k">def</span> <span class="nf">maxMatch</span><span class="p">(</span><span class="n">bigword</span><span class="p">):</span>
+  <span class="n">tokens</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+  <span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">bigword</span><span class="p">):</span>
+      <span class="n">maxWord</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+      <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">bigword</span><span class="p">)):</span>
+          <span class="n">tempWord</span> <span class="o">=</span> <span class="n">bigword</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">j</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
+          <span class="k">if</span> <span class="n">tempWord</span> <span class="ow">in</span> <span class="n">lowercaseCorpus</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">tempWord</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">maxWord</span><span class="p">):</span>
+              <span class="n">maxWord</span> <span class="o">=</span> <span class="n">tempWord</span>
+      <span class="n">i</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="nb">len</span><span class="p">(</span><span class="n">maxWord</span><span class="p">)</span>
+      <span class="n">tokens</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">maxWord</span><span class="p">)</span>
+
+  <span class="k">print</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">maxMatch</span><span class="p">(</span><span class="s2">&quot;combinedwordhereforthealgorithm&quot;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;combined&#39;, &#39;word&#39;, &#39;here&#39;, &#39;forth&#39;, &#39;ea&#39;, &#39;l&#39;, &#39;gor&#39;, &#39;it&#39;, &#39;h&#39;, &#39;m&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Hugging-face">Hugging face<a class="anchor-link" href="#Hugging-face">&#182;</a></h1><p>Bert-WordPiece</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="err">!</span><span class="n">pip</span> <span class="n">install</span> <span class="n">tokenizers</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Collecting tokenizers
+  Downloading tokenizers-0.10.3-cp37-cp37m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl (3.3 MB)
+     |████████████████████████████████| 3.3 MB 5.2 MB/s 
+Installing collected packages: tokenizers
+Successfully installed tokenizers-0.10.3
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="kn">from</span> <span class="nn">tokenizers</span> <span class="kn">import</span> <span class="n">BertWordPieceTokenizer</span>
+<span class="err">!</span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">s3</span><span class="o">.</span><span class="n">amazonaws</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">models</span><span class="o">.</span><span class="n">huggingface</span><span class="o">.</span><span class="n">co</span><span class="o">/</span><span class="n">bert</span><span class="o">/</span><span class="n">bert</span><span class="o">-</span><span class="n">base</span><span class="o">-</span><span class="n">uncased</span><span class="o">-</span><span class="n">vocab</span><span class="o">.</span><span class="n">txt</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>--2021-09-12 10:00:55--  https://s3.amazonaws.com/models.huggingface.co/bert/bert-base-uncased-vocab.txt
+Resolving s3.amazonaws.com (s3.amazonaws.com)... 52.217.78.126
+Connecting to s3.amazonaws.com (s3.amazonaws.com)|52.217.78.126|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 231508 (226K) [text/plain]
+Saving to: ‘bert-base-uncased-vocab.txt’
+
+bert-base-uncased-v 100%[===================&gt;] 226.08K  --.-KB/s    in 0.06s   
+
+2021-09-12 10:00:55 (3.96 MB/s) - ‘bert-base-uncased-vocab.txt’ saved [231508/231508]
+
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">BertWordPieceTokenizer</span><span class="p">(</span><span class="s2">&quot;bert-base-uncased-vocab.txt&quot;</span><span class="p">,</span> <span class="n">lowercase</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode_batch</span><span class="p">([</span><span class="n">text</span><span class="p">,</span> <span class="n">text2</span><span class="p">,</span> <span class="n">text3</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;[CLS]&#39;, &#39;hi&#39;, &#39;##ii&#39;, &#39;!&#39;, &#39;:&#39;, &#39;d&#39;, &#39;how&#39;, &#39;are&#39;, &#39;y&#39;, &#34;&#39;&#34;, &#39;all&#39;, &#39;doin&#39;, &#34;&#39;&#34;, &#39;[UNK]&#39;, &#39;.&#39;, &#39;#&#39;, &#39;daily&#39;, &#39;##t&#39;, &#39;##wee&#39;, &#39;##t&#39;, &#39;@&#39;, &#39;daily&#39;, &#39;##t&#39;, &#39;##wee&#39;, &#39;##ter&#39;, &#39;full&#39;, &#39;-&#39;, &#39;stops&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;.&#39;, &#39;and&#39;, &#39;a&#39;, &#39;link&#39;, &#39;!&#39;, &#39;!&#39;, &#39;https&#39;, &#39;:&#39;, &#39;/&#39;, &#39;/&#39;, &#39;im&#39;, &#39;##gur&#39;, &#39;.&#39;, &#39;com&#39;, &#39;/&#39;, &#39;gallery&#39;, &#39;/&#39;, &#39;y&#39;, &#39;##8&#39;, &#39;##u&#39;, &#39;##0&#39;, &#39;##gg&#39;, &#39;##8&#39;, &#39;.&#39;, &#39;in&#39;, &#39;com&#39;, &#39;##par&#39;, &#39;##ision&#39;, &#39;to&#39;, &#39;:&#39;, &#39;these&#39;, &#39;f1&#39;, &#39;##23&#39;, &#39;@&#39;, &#39;gma&#39;, &#39;##il&#39;, &#39;.&#39;, &#39;com&#39;, &#39;a&#39;, &#39;word&#39;, &#39;i&#39;, &#39;made&#39;, &#39;up&#39;, &#39;is&#39;, &#39;ran&#39;, &#34;&#39;&#34;, &#39;om&#39;, &#39;cu&#39;, &#39;##z&#39;, &#39;i&#39;, &#39;can&#39;, &#39;##t&#39;, &#39;sp&#39;, &#39;##el&#39;, &#39;[SEP]&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-python"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="n">tokenizer</span><span class="o">.</span><span class="n">encode_batch</span><span class="p">([</span><span class="s2">&quot;averybigcombinedwordforthealgorithm&quot;</span><span class="p">])</span>
+<span class="k">print</span><span class="p">(</span><span class="n">output</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tokens</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[&#39;[CLS]&#39;, &#39;avery&#39;, &#39;##bi&#39;, &#39;##gc&#39;, &#39;##om&#39;, &#39;##bine&#39;, &#39;##d&#39;, &#39;##word&#39;, &#39;##forth&#39;, &#39;##eal&#39;, &#39;##gor&#39;, &#39;##ith&#39;, &#39;##m&#39;, &#39;[SEP]&#39;]
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What to do if you do not have any module for your language? i.e. a Low resource languages.</p>
+<ul>
+<li>Train your own tokenizer, hugging face makes it very easy: 
+<a href="https://huggingface.co/blog/how-to-train">https://huggingface.co/blog/how-to-train</a></li>
+</ul>
+
+</div>
+</div>
+</div>
     </div>
   </div>
 </body>
 
  
+
+<script type="application/vnd.jupyter.widget-state+json">
+{"9eb4694efbb444dab476ec2cf8c11467": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "StyleView", "_model_name": "DescriptionStyleModel", "description_width": "", "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.2.0", "_model_module": "@jupyter-widgets/controls"}, "model_name": "DescriptionStyleModel", "model_module_version": "1.5.0"}, "6cbee4098aeb474da5042d76709517f7": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "StyleView", "_model_name": "DescriptionStyleModel", "description_width": "", "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.2.0", "_model_module": "@jupyter-widgets/controls"}, "model_name": "DescriptionStyleModel", "model_module_version": "1.5.0"}, "2d830c2555d04ec68321bd6b78bd2c2e": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "HBoxView", "_dom_classes": [], "_model_name": "HBoxModel", "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.5.0", "box_style": "", "layout": "IPY_MODEL_5445ee75512f4843abff379450212e0d", "_model_module": "@jupyter-widgets/controls", "children": ["IPY_MODEL_5e794f70549e4cf599a1d55a476493b1", "IPY_MODEL_dead949c179e416296b267cbb45400e7", "IPY_MODEL_bf9082b0b8364106bbdf1e18fbde1c12"]}, "model_name": "HBoxModel", "model_module_version": "1.5.0"}, "9dab58d23f5846c1b5afc43596a28498": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "b1f93638854345f99ed4b07f7698e925": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "978cd340f47c475c9fbf0eace049f7bd": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "dead949c179e416296b267cbb45400e7": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "ProgressView", "style": "IPY_MODEL_4b772e8a50c9400ba02bb9ab5268c40f", "_dom_classes": [], "description": "", "_model_name": "FloatProgressModel", "bar_style": "success", "max": 212012648, "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "value": 212012648, "_view_count": null, "_view_module_version": "1.5.0", "orientation": "horizontal", "min": 0, "description_tooltip": null, "_model_module": "@jupyter-widgets/controls", "layout": "IPY_MODEL_86a48028ba4247a1bd0885fb905c2f37"}, "model_name": "FloatProgressModel", "model_module_version": "1.5.0"}, "5adad91e438e4eea99d07239d8b44053": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "3a3ed7258caf4c6298e11b0f7e2e0e10": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "3a1393e1aec24f1f8ca8eee930a05d3d": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "StyleView", "_model_name": "ProgressStyleModel", "description_width": "", "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.2.0", "bar_color": null, "_model_module": "@jupyter-widgets/controls"}, "model_name": "ProgressStyleModel", "model_module_version": "1.5.0"}, "b0f882fe3fb34cb492fc0d2af0362f81": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "StyleView", "_model_name": "DescriptionStyleModel", "description_width": "", "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.2.0", "_model_module": "@jupyter-widgets/controls"}, "model_name": "DescriptionStyleModel", "model_module_version": "1.5.0"}, "5445ee75512f4843abff379450212e0d": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "ec3e7fb1ad93495485f4c6dc7b9c2dc1": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "HBoxView", "_dom_classes": [], "_model_name": "HBoxModel", "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.5.0", "box_style": "", "layout": "IPY_MODEL_e0498af00b4e46ab883fced247dcfc34", "_model_module": "@jupyter-widgets/controls", "children": ["IPY_MODEL_de82c8e895c04f6e88d79c62008e4039", "IPY_MODEL_e5cdbde1ab1e4270ab7d3e0e5962fafb", "IPY_MODEL_496cff43f5a441e4b165087dc079303f"]}, "model_name": "HBoxModel", "model_module_version": "1.5.0"}, "740dd1e454434cda87781dd522f8c9be": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "HTMLView", "style": "IPY_MODEL_4d9b7bd82ba44e4ca85d050aa8cd0276", "_dom_classes": [], "description": "", "_model_name": "HTMLModel", "_model_module": "@jupyter-widgets/controls", "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "value": "Downloading http://nlp.stanford.edu/software/stanza/1.2.2/ja/default.zip: 100%", "_view_count": null, "_view_module_version": "1.5.0", "description_tooltip": null, "placeholder": "\u200b", "layout": "IPY_MODEL_07f09c8c6a3246719a0f472f02ed5f3f"}, "model_name": "HTMLModel", "model_module_version": "1.5.0"}, "cf2dbf444c0a45c9be2c1c20a6b5233e": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "ProgressView", "style": "IPY_MODEL_8a4aef3befc34d2f87e549e3569a0f87", "_dom_classes": [], "description": "", "_model_name": "FloatProgressModel", "bar_style": "success", "max": 24144, "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "value": 24144, "_view_count": null, "_view_module_version": "1.5.0", "orientation": "horizontal", "min": 0, "description_tooltip": null, "_model_module": "@jupyter-widgets/controls", "layout": "IPY_MODEL_b1f93638854345f99ed4b07f7698e925"}, "model_name": "FloatProgressModel", "model_module_version": "1.5.0"}, "c18ff3fad667481487d6399cdfbd5d3b": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "StyleView", "_model_name": "DescriptionStyleModel", "description_width": "", "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.2.0", "_model_module": "@jupyter-widgets/controls"}, "model_name": "DescriptionStyleModel", "model_module_version": "1.5.0"}, "930ad9a2bb6246839706457a791e556f": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "HTMLView", "style": "IPY_MODEL_6cbee4098aeb474da5042d76709517f7", "_dom_classes": [], "description": "", "_model_name": "HTMLModel", "_model_module": "@jupyter-widgets/controls", "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "value": " 140k/? [00:00&lt;00:00, 2.20MB/s]", "_view_count": null, "_view_module_version": "1.5.0", "description_tooltip": null, "placeholder": "\u200b", "layout": "IPY_MODEL_625bbe9a8465458c931f7a342bacbab4"}, "model_name": "HTMLModel", "model_module_version": "1.5.0"}, "9e82ee65c44d4155be95ea9fccb978de": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "HTMLView", "style": "IPY_MODEL_0b2906ddc32a4c1eb578b2c96222a5cd", "_dom_classes": [], "description": "", "_model_name": "HTMLModel", "_model_module": "@jupyter-widgets/controls", "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "value": " 205M/205M [00:36&lt;00:00, 5.31MB/s]", "_view_count": null, "_view_module_version": "1.5.0", "description_tooltip": null, "placeholder": "\u200b", "layout": "IPY_MODEL_e90f0ba19deb429ab086d382747cede3"}, "model_name": "HTMLModel", "model_module_version": "1.5.0"}, "d5b3874af50e4cbfbfea3f9c41687c99": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "a3e950a1bb0040e3a22f8f5f67c231d8": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "StyleView", "_model_name": "DescriptionStyleModel", "description_width": "", "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.2.0", "_model_module": "@jupyter-widgets/controls"}, "model_name": "DescriptionStyleModel", "model_module_version": "1.5.0"}, "42764daf9865459d899d77230ab75e6d": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "HTMLView", "style": "IPY_MODEL_b0f882fe3fb34cb492fc0d2af0362f81", "_dom_classes": [], "description": "", "_model_name": "HTMLModel", "_model_module": "@jupyter-widgets/controls", "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "value": "Downloading https://raw.githubusercontent.com/stanfordnlp/stanza-resources/main/resources_1.2.2.json: ", "_view_count": null, "_view_module_version": "1.5.0", "description_tooltip": null, "placeholder": "\u200b", "layout": "IPY_MODEL_f8170e2acb5c488598922b3b370cc075"}, "model_name": "HTMLModel", "model_module_version": "1.5.0"}, "e0498af00b4e46ab883fced247dcfc34": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "bf9082b0b8364106bbdf1e18fbde1c12": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "HTMLView", "style": "IPY_MODEL_a3e950a1bb0040e3a22f8f5f67c231d8", "_dom_classes": [], "description": "", "_model_name": "HTMLModel", "_model_module": "@jupyter-widgets/controls", "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "value": " 212M/212M [00:37&lt;00:00, 5.34MB/s]", "_view_count": null, "_view_module_version": "1.5.0", "description_tooltip": null, "placeholder": "\u200b", "layout": "IPY_MODEL_5adad91e438e4eea99d07239d8b44053"}, "model_name": "HTMLModel", "model_module_version": "1.5.0"}, "de78b8ad91c8487f9dec6a780953c054": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "HBoxView", "_dom_classes": [], "_model_name": "HBoxModel", "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.5.0", "box_style": "", "layout": "IPY_MODEL_ab85c710c28b49d3848b244985c4943b", "_model_module": "@jupyter-widgets/controls", "children": ["IPY_MODEL_42764daf9865459d899d77230ab75e6d", "IPY_MODEL_cf2dbf444c0a45c9be2c1c20a6b5233e", "IPY_MODEL_930ad9a2bb6246839706457a791e556f"]}, "model_name": "HBoxModel", "model_module_version": "1.5.0"}, "4b772e8a50c9400ba02bb9ab5268c40f": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "StyleView", "_model_name": "ProgressStyleModel", "description_width": "", "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.2.0", "bar_color": null, "_model_module": "@jupyter-widgets/controls"}, "model_name": "ProgressStyleModel", "model_module_version": "1.5.0"}, "8a4aef3befc34d2f87e549e3569a0f87": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "StyleView", "_model_name": "ProgressStyleModel", "description_width": "", "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.2.0", "bar_color": null, "_model_module": "@jupyter-widgets/controls"}, "model_name": "ProgressStyleModel", "model_module_version": "1.5.0"}, "5e794f70549e4cf599a1d55a476493b1": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "HTMLView", "style": "IPY_MODEL_c18ff3fad667481487d6399cdfbd5d3b", "_dom_classes": [], "description": "", "_model_name": "HTMLModel", "_model_module": "@jupyter-widgets/controls", "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "value": "Downloading http://nlp.stanford.edu/software/stanza/1.2.2/ko/default.zip: 100%", "_view_count": null, "_view_module_version": "1.5.0", "description_tooltip": null, "placeholder": "\u200b", "layout": "IPY_MODEL_3a3ed7258caf4c6298e11b0f7e2e0e10"}, "model_name": "HTMLModel", "model_module_version": "1.5.0"}, "4d9b7bd82ba44e4ca85d050aa8cd0276": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "StyleView", "_model_name": "DescriptionStyleModel", "description_width": "", "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.2.0", "_model_module": "@jupyter-widgets/controls"}, "model_name": "DescriptionStyleModel", "model_module_version": "1.5.0"}, "e24a6bcf60f54a21a8ae502116387cd4": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "HBoxView", "_dom_classes": [], "_model_name": "HBoxModel", "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.5.0", "box_style": "", "layout": "IPY_MODEL_d5b3874af50e4cbfbfea3f9c41687c99", "_model_module": "@jupyter-widgets/controls", "children": ["IPY_MODEL_740dd1e454434cda87781dd522f8c9be", "IPY_MODEL_e01f0ccb628746a3a9c15779c58e91d5", "IPY_MODEL_9e82ee65c44d4155be95ea9fccb978de"]}, "model_name": "HBoxModel", "model_module_version": "1.5.0"}, "d0159a5479444835bcda58adb2da9706": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "86a48028ba4247a1bd0885fb905c2f37": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "0b2906ddc32a4c1eb578b2c96222a5cd": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "StyleView", "_model_name": "DescriptionStyleModel", "description_width": "", "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.2.0", "_model_module": "@jupyter-widgets/controls"}, "model_name": "DescriptionStyleModel", "model_module_version": "1.5.0"}, "e01f0ccb628746a3a9c15779c58e91d5": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "ProgressView", "style": "IPY_MODEL_3a1393e1aec24f1f8ca8eee930a05d3d", "_dom_classes": [], "description": "", "_model_name": "FloatProgressModel", "bar_style": "success", "max": 205348591, "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "value": 205348591, "_view_count": null, "_view_module_version": "1.5.0", "orientation": "horizontal", "min": 0, "description_tooltip": null, "_model_module": "@jupyter-widgets/controls", "layout": "IPY_MODEL_d0159a5479444835bcda58adb2da9706"}, "model_name": "FloatProgressModel", "model_module_version": "1.5.0"}, "07f09c8c6a3246719a0f472f02ed5f3f": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "f8170e2acb5c488598922b3b370cc075": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "b4a91fae81cf4c7692f91cc0f9732047": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "StyleView", "_model_name": "DescriptionStyleModel", "description_width": "", "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.2.0", "_model_module": "@jupyter-widgets/controls"}, "model_name": "DescriptionStyleModel", "model_module_version": "1.5.0"}, "e5cdbde1ab1e4270ab7d3e0e5962fafb": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "ProgressView", "style": "IPY_MODEL_88325427142b498db0a6aeb8908c119d", "_dom_classes": [], "description": "", "_model_name": "FloatProgressModel", "bar_style": "success", "max": 24144, "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "value": 24144, "_view_count": null, "_view_module_version": "1.5.0", "orientation": "horizontal", "min": 0, "description_tooltip": null, "_model_module": "@jupyter-widgets/controls", "layout": "IPY_MODEL_6ca6a8fbe456451fbcf02509bb9e22bd"}, "model_name": "FloatProgressModel", "model_module_version": "1.5.0"}, "e90f0ba19deb429ab086d382747cede3": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "496cff43f5a441e4b165087dc079303f": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "HTMLView", "style": "IPY_MODEL_b4a91fae81cf4c7692f91cc0f9732047", "_dom_classes": [], "description": "", "_model_name": "HTMLModel", "_model_module": "@jupyter-widgets/controls", "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "value": " 140k/? [00:00&lt;00:00, 2.98MB/s]", "_view_count": null, "_view_module_version": "1.5.0", "description_tooltip": null, "placeholder": "\u200b", "layout": "IPY_MODEL_9dab58d23f5846c1b5afc43596a28498"}, "model_name": "HTMLModel", "model_module_version": "1.5.0"}, "6ca6a8fbe456451fbcf02509bb9e22bd": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "de82c8e895c04f6e88d79c62008e4039": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "HTMLView", "style": "IPY_MODEL_9eb4694efbb444dab476ec2cf8c11467", "_dom_classes": [], "description": "", "_model_name": "HTMLModel", "_model_module": "@jupyter-widgets/controls", "_view_module": "@jupyter-widgets/controls", "_model_module_version": "1.5.0", "value": "Downloading https://raw.githubusercontent.com/stanfordnlp/stanza-resources/main/resources_1.2.2.json: ", "_view_count": null, "_view_module_version": "1.5.0", "description_tooltip": null, "placeholder": "\u200b", "layout": "IPY_MODEL_978cd340f47c475c9fbf0eace049f7bd"}, "model_name": "HTMLModel", "model_module_version": "1.5.0"}, "ab85c710c28b49d3848b244985c4943b": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "625bbe9a8465458c931f7a342bacbab4": {"model_module": "@jupyter-widgets/base", "state": {"_view_name": "LayoutView", "grid_template_rows": null, "right": null, "justify_content": null, "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.2.0", "_view_count": null, "flex_flow": null, "min_width": null, "border": null, "align_items": null, "bottom": null, "_model_module": "@jupyter-widgets/base", "top": null, "grid_column": null, "width": null, "grid_row": null, "grid_auto_flow": null, "grid_area": null, "grid_template_columns": null, "flex": null, "_model_name": "LayoutModel", "justify_items": null, "overflow_x": null, "max_height": null, "align_content": null, "visibility": null, "overflow": null, "height": null, "min_height": null, "padding": null, "grid_auto_rows": null, "grid_gap": null, "overflow_y": null, "max_width": null, "display": null, "_view_module_version": "1.2.0", "align_self": null, "grid_template_areas": null, "object_position": null, "object_fit": null, "grid_auto_columns": null, "margin": null, "order": null, "left": null}, "model_name": "LayoutModel", "model_module_version": "1.2.0"}, "88325427142b498db0a6aeb8908c119d": {"model_module": "@jupyter-widgets/controls", "state": {"_view_name": "StyleView", "_model_name": "ProgressStyleModel", "description_width": "", "_view_module": "@jupyter-widgets/base", "_model_module_version": "1.5.0", "_view_count": null, "_view_module_version": "1.2.0", "bar_color": null, "_model_module": "@jupyter-widgets/controls"}, "model_name": "ProgressStyleModel", "model_module_version": "1.5.0"}}
+</script>
 
 
 </html>

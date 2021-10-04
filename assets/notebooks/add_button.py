@@ -12,8 +12,9 @@ if __name__ == "__main__":
         for i, line in enumerate(lines):
             if line.startswith(
                 '<div class="text_cell_render border-box-sizing rendered_html">'
-            ):
+            ) and flag==0:
                 lines[i] = lines[i] + button
+                flag=1
         f.truncate()
         f.seek(0)
         for line in lines:
