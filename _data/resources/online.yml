@@ -1,5 +1,18 @@
 resource: 
-  - topic: Google
-    link: https://www.google.co.in/
-  - topic: Google
-    link: https://www.google.co.in/
+  - topic: NLTK
+    link: https://www.nltk.org/
+  - topic: Spacy
+    link: https://spacy.io/usage/linguistic-features
+  - topic: Indic-nlp
+    link: https://github.com/anoopkunchukuttan/indic_nlp_library
+  - topic: Stanza
+    link: https://stanfordnlp.github.io/stanza/
+  - topic: Hugging Face
+    link: https://huggingface.co/
+  - topic: Stanford NLP
+    link: https://stanfordnlp.github.io/CoreNLP/
+  - topic: iNLTK
+    link: https://inltk.readthedocs.io/en/latest/index.html
+  - topic: sanstem
+    link: https://pypi.org/project/sanstem/
+
