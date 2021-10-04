@@ -1,6 +1,4 @@
 content:
-- p: <p>Lorem ipsum dolor sit amet, consectetur elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-- p: <p>Some part of the course (pre and post midsem) will be conducted in flipped mode where students will be provided the video
-lectures and the doubts clearing sessions will be conducted in live classes. The course does not have a lab component; however, tutorials
-will be conducted in class for hands-on and project guidance.</p>
+- p: <p>Welcome to the homepage for CS F429, Natural Language Processing. The intent of the course is to present a fairly broad First Degree lelvel introduction to NLP. The primary focus of the course will be on understanding various NLP tasks, algorithms for effective solving these problems, and methods for evaluating their performance.</p>
+- p: <p>Some part of the course (pre and post midsem) will be conducted in flipped mode where students will be provided the video lectures and the doubts clearing sessions will be conducted in live classes. The course does not have a lab component; however, tutorials will be conducted in class for hands-on and project guidance.</p>
+- p: <p>For lecture slides, videos and tutorial recordings refer to the classroom, the handout is available at <a href="/syllabus/">syllabus</a> and all assignments, tutorial notebooks and resources are available at <a href="/resources/">resources</a>.</p>
