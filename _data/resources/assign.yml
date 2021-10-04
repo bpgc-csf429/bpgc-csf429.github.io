@@ -1,5 +1,7 @@
 assignments:
-  - name: Assignment 1
-    link: ../assets/assignments/Test1.pdf
-  - name: Assignment 2
-    link: ../assets/assignments/Test2.pdf
+  - name: Course Project [Part1]
+    link: ../assets/assignments/CSF429Projects.pdf
+    description: Course Project for CS F429, and this is the document link for all <a href="https://docs.google.com/document/u/1/d/1WGReDCD2oxL6ZZv-VtyQVI5oCQ87QjT5Sj1IchMzris/edit?usp=drivesdk" target="_blank">queries</a>. 
+
+  - name: Course Project [Part2]
+    description: TBA

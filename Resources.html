@@ -2,7 +2,7 @@
 layout: home
 permalink: /resources/
 ---
-<!--Resources for students
+<!--Resources for students-->
 <main class="index-page" >
     <section class="page-head ">
         <div class="wrap">
@@ -18,13 +18,19 @@ permalink: /resources/
         </div>
         <div class="wrap">
             <h2 class="standard-title" id="Assignments">Assignments</h2>
-                <p> See <a href="{{site.url}}/{{site.baseurl}}/syllabus">Syllabus</a> for more information.</p>
+                <p>All the ongoing/completed assignments are present here. Note that: <ul><li>Only tutorial session should be used for the discussion</li>
+                <li>Before discussing with TAs (what to do in the project), understand your problem statement and data well.</li>
+                <li>Do not ask TAs to validate your approach.</li></ul>
+                See <a href="{{site.url}}/{{site.baseurl}}/syllabus">Syllabus</a> for more information and detailed breakup for the vourse evaluation.</p>
             <ul class="lists two-col animate-3" resource="homeworks">
                 {% for item in site.data.resources.assign.assignments %}
                 {% if item.link =='' %}
                 <li>{{item.name}}</li>
                 {% else %}
                 <li><a href="{{item.link}}" target="_blank">{{item.name}}</a></li>
+                {%endif%}
+                {% if item.description !='' %}
+                <p>{{item.description}}</p>
                 {%endif%}
                 {% endfor %}
             </ul>
@@ -55,6 +61,5 @@ permalink: /resources/
             </ul>
         </div>
         <br><hr><br>
-    </section> 
+    </section>
 </main>
--->

@@ -17,6 +17,9 @@ permalink: /syllabus/
         <div class="wrap" >
             <h2 class="standard-title" id="{{item.heading}}" >{{item.heading}}</a></h2>
             <div class="copy">{{item.content}}</div>
+            {% if item.link !='' %}
+            <a href="{{item.link}}" target="_blank">{{item.name}}</a>
+            {%endif%}
         </div>  
         </section>
         <br>
