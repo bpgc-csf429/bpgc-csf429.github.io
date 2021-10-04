@@ -1,5 +1,4 @@
 assignments:
-  - name: Assignment 1
-    link: ../assets/assignments/Test1.pdf
-  - name: Assignment 2
-    link: ../assets/assignments/Test2.pdf
+  - name: Course Project
+    link: ../assets/assignments/CSF429Projects.pdf
+    description: Course Project for CS F429, the dataset are available <a href="">here</a> and this is the document link for all <a href="https://docs.google.com/document/u/1/d/1WGReDCD2oxL6ZZv-VtyQVI5oCQ87QjT5Sj1IchMzris/edit?usp=drivesdk">queries</a> 
