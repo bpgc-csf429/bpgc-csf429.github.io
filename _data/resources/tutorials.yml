@@ -13,3 +13,13 @@ tutorial:
           link: '../assets/notebooks/pages/Normalization'
     date: "13-09-21"
     author: "Vishwa Shah"
+  - tut: 'Tutorial 2: Language Modelling'
+    resources:
+      - resource:
+          type: 'Notebook'
+          link: '../assets/notebooks/pages/Language_Modelling'
+      - resource:
+          type: 'Slides'
+          link: '../assets/tutorials/Language Modelling.pdf'
+    date: "8-11-21"
+    author: "Somesh Singh"
