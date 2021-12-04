@@ -30,3 +30,17 @@ tutorial:
           link: '../assets/tutorials/Dependency Parsing.pdf'
     date: "10-11-21"
     author: "Yash Bhartia"
+  - tut: 'Tutorial 4: Topic Modeling'
+    resources:
+      - resource:
+          type: 'Notebook'
+          link: '../assets/notebooks/pages/TopicModeling_20NewsGroup'
+    date: "22-11-21"
+    author: "Vishwa Shah"
+  - tut: 'Tutorial 5: Contextual Embeddings'
+    resources:
+      - resource:
+          type: 'Notebook'
+          link: '../assets/notebooks/pages/Contextual_Embeddings'
+    date: "01-12-21"
+    author: "Vishwa Shah"
