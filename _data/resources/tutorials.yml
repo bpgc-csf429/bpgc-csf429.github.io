@@ -28,6 +28,9 @@ tutorial:
       - resource:
           type: 'Slides'
           link: '../assets/tutorials/Dependency Parsing.pdf'
+      - resource:
+          type: 'Notebook'
+          link: '../assets/notebooks/pages/POS_and_Dependency_parsing'
     date: "10-11-21"
     author: "Yash Bhartia"
   - tut: 'Tutorial 4: Topic Modeling'
